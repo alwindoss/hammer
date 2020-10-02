@@ -5,48 +5,29 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/template/html"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	fs "github.com/rakyll/statik/fs"
+
+	// This is needed for embedding
+	_ "github.com/alwindoss/hammer/statik"
 )
 
 func main() {
 	port := os.Getenv("PORT")
-	engine := html.New("./templates", ".html")
-	// Reload the templates on each render, good for development
-	engine.Reload(true) // Optional. Default: false
-
-	// Debug will print each template that is parsed, good for debugging
-	engine.Debug(true) // Optional. Default: false
-
-	// Layout defines the variable name that is used to yield templates within layouts
-	engine.Layout("embed") // Optional. Default: "embed"
-	// Delims sets the action delimiters to the specified strings
-	engine.Delims("{{", "}}") // Optional. Default: engine delimiters
-	app := fiber.New(fiber.Config{
-		Views: engine,
-	})
+	if port == "" {
+		port = "3000"
+	}
+	app := fiber.New()
+	statikFS, err := fs.New()
+	if err != nil {
+		panic(err)
+	}
+	app.Use("/", filesystem.New(filesystem.Config{
+		Root: statikFS,
+	}))
 
 	// app.Static("/public", "./public")
-	app.Static("/public", "./public")
-
-	// To render a template, you can call the ctx.Render function
-	// Render(tmpl string, values interface{}, layout ...string)
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "Home",
-		}, "layouts/default")
-	})
-
-	// Render with layout example
-	app.Get("/about", func(c *fiber.Ctx) error {
-		return c.Render("about", fiber.Map{
-			"Title": "About",
-		}, "layouts/default")
-	})
-	app.Get("/loginpage", func(c *fiber.Ctx) error {
-		return c.Render("login", fiber.Map{
-			"Title": "Login",
-		}, "layouts/default")
-	})
+	// app.Static("/", "./ui")
 
 	log.Fatal(app.Listen(":" + port))
 }
