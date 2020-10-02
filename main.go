@@ -2,12 +2,14 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 )
 
 func main() {
+	port := os.Getenv("PORT")
 	engine := html.New("./templates", ".html")
 	// Reload the templates on each render, good for development
 	engine.Reload(true) // Optional. Default: false
@@ -46,5 +48,5 @@ func main() {
 		}, "layouts/default")
 	})
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":" + port))
 }
