@@ -1,32 +1,62 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <Nav v-bind:navItems=navItems />
+    <v-app-bar app clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Hammer</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <!-- <v-container class="fill-height" fluid> -->
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+
+    <v-footer app>
+      <span>&copy; Alwin Doss, {{ new Date().getFullYear() }}</span>
+    </v-footer>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Nav from '@/components/navigation/Nav.vue';
+export default {
+  components: {
+    Nav,
+  },
+  props: {
+    source: String,
+  },
 
-#nav {
-  padding: 30px;
+  data: () => ({
+    drawer: null,
+    navItems: [
+      {
+        to: "/",
+        title: "Home",
+        icon: "mdi-view-dashboard"
+      },
+      {
+        to: "/lesson",
+        title: "Lessons",
+        icon: "mdi-bandcamp"
+      },
+      {
+        to: "/lessonplan",
+        title: "Lesson Plans",
+        icon: "mdi-ballot"
+      },
+      {
+        to: "/student",
+        title: "Students",
+        icon: "mdi-account-group"
+      },
+    ]
+  }),
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  created() {
+    this.$vuetify.theme.dark = false;
+  },
+};
+</script>
