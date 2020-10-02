@@ -14,7 +14,7 @@ build-ui:
 generate:
 	statik -src=./dist
 build: 
-	$(GOBUILD) -o ./$(BINARY_LOC)/$(MANNA_BINARY_NAME) -v 
+	$(GOBUILD) -o ./$(BINARY_LOC)/$(MANNA_BINARY_NAME) -v ./cmd/hammer/... 
 test: 
 	$(GOTEST) -v ./...
 clean: 

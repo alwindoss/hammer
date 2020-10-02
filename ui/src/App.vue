@@ -23,7 +23,7 @@
     </v-app-bar>
 
     <v-main>
-      <!--  -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -42,20 +42,20 @@
         icon: "mdi-view-dashboard"
       },
       {
-        to: "/lesson",
-        title: "Lessons",
+        to: "/logbook",
+        title: "Log Book",
         icon: "mdi-bandcamp"
       },
-      {
-        to: "/lessonplan",
-        title: "Lesson Plans",
-        icon: "mdi-ballot"
-      },
-      {
-        to: "/student",
-        title: "Students",
-        icon: "mdi-account-group"
-      },
+      // {
+      //   to: "/lessonplan",
+      //   title: "Lesson Plans",
+      //   icon: "mdi-ballot"
+      // },
+      // {
+      //   to: "/student",
+      //   title: "Students",
+      //   icon: "mdi-account-group"
+      // },
     ]
   }),
   created() {
