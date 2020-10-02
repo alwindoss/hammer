@@ -1,50 +1,65 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list dense>
-        <v-list-item link to="/">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list dense >
+        <v-list-item v-for="(navItem, index) in navItems" :key="index" link :to="navItem.to">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>{{navItem.icon}}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link to="/about">
-          <v-list-item-action>
-            <v-icon>mdi-email</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
+            <v-list-item-title>{{navItem.title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="indigo" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Viovoi</v-toolbar-title>
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
     <v-main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <!--  -->
     </v-main>
-    <v-footer color="indigo" app>
-      <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
-export default {
-  props: {
+  export default {
+    props: {
     source: String,
   },
-
   data: () => ({
     drawer: null,
+    navItems: [
+      {
+        to: "/",
+        title: "Home",
+        icon: "mdi-view-dashboard"
+      },
+      {
+        to: "/lesson",
+        title: "Lessons",
+        icon: "mdi-bandcamp"
+      },
+      {
+        to: "/lessonplan",
+        title: "Lesson Plans",
+        icon: "mdi-ballot"
+      },
+      {
+        to: "/student",
+        title: "Students",
+        icon: "mdi-account-group"
+      },
+    ]
   }),
-};
+  created() {
+    this.$vuetify.theme.dark = false;
+  },
+  }
 </script>
