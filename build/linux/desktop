@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=My Product
+Comment=A hammer application
+# The Exec line includes %u to pass the URL to the application
+Exec=/usr/local/bin/hammer %u
+Terminal=false
+Type=Application
+Icon=hammer
+Categories=Utility;
+StartupWMClass=hammer
+
+ 
